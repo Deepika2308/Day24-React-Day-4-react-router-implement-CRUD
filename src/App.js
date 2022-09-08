@@ -12,6 +12,7 @@ import { Modal, Button } from "react-bootstrap";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { TiDelete } from "react-icons/ti";
 import {API} from './global.js';
+import {WelcomePage} from "./WelcomePage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/create-user" element={<Header />} />
-          <Route exact path="/" element={<h1>welcome!</h1>} />
+          <Route exact path="/" element={<WelcomePage />} />
           <Route path="/users" element={<ShowUsers />} />
           <Route path="/edit-user/:id" element={<GetUserFromDB />} />
           <Route path="/profile/:id" element={<ShowProfile />}></Route>
@@ -29,10 +30,6 @@ function App() {
     </div>
   );
 }
-
-// function WelcomePage(){
-
-// }
 
 function Header() {
   let [fname, setFname] = useState("");

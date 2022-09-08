@@ -11,6 +11,7 @@ import {
 import { Modal, Button } from "react-bootstrap";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { TiDelete } from "react-icons/ti";
+import {API} from './global.js';
 
 function App() {
   return (
@@ -48,7 +49,7 @@ function Header() {
       profile: profile,
     };
 
-    fetch("http://127.0.0.1:4100/createUser", {
+    fetch(`${API}/createUser`, {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: { "content-type": "application/json; charset=UTF-8" },
@@ -154,7 +155,7 @@ function ShowUsers() {
   let [modalMsg, setModalMsg] = useState("");
 
   function fetchUsers() {
-    fetch("http://127.0.0.1:4100/users")
+    fetch(`${API}/users`)
       .then((response) => response.json())
       .then((data) => {
         setUserList(data);
@@ -193,7 +194,7 @@ function ShowUsers() {
                   className="mb-4 col-4"
                   type="button"
                   onClick={() => {
-                    fetch(`http://127.0.0.1:4100/deleteUser/${obj._id}`, {
+                    fetch(`${API}/deleteUser/${obj._id}`, {
                       method: "DELETE",
                     })
                       .then((response) => response.json())
@@ -229,7 +230,7 @@ function GetUserFromDB() {
 
   //get user values from db
   useEffect(() => {
-    fetch("http://127.0.0.1:4100/findUser/" + id)
+    fetch(`${API}/findUser/` + id)
       .then((response) => response.json())
       .then((data) => {
         setFormValue(data);
@@ -261,7 +262,7 @@ function EditUser({ formValue }) {
       profile: profile,
     };
 
-    fetch(`http://127.0.0.1:4100/updateUser/${formValue._id}`, {
+    fetch(`${API}/updateUser/${formValue._id}`, {
       method: "PUT",
       body: JSON.stringify(updatedFormValue),
       headers: { "content-type": "application/json" },
@@ -380,7 +381,7 @@ function handleEdit(event){
     edit_mobileNumber:editMobileNum
   }
 
-  fetch(`http://127.0.0.1:4100/editProfile/${id}`,{
+  fetch(`${API}/editProfile/${id}`,{
     method:"PUT",
     body:JSON.stringify(editedObj),
     headers:{"content-type":"application/json"},
@@ -523,7 +524,7 @@ function Profile({id}) {
    let navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:4100/getProfile/${id}`)
+    fetch(`${API}/getProfile/${id}`)
     .then(response => response.json())
     .then(data => {
       setProfile(data);

@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.privilege-section{
+  margin-top:3em;
+}
+
+.update-user-profile,.edit-button-profile{
+  width:10em;
+}

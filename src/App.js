@@ -7,6 +7,7 @@ import {
   Routes,
   useNavigate,
   useParams,
+  Link
 } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import { IoCheckmarkCircle } from "react-icons/io5";
@@ -39,6 +40,8 @@ function Header() {
   let [profile, setProfile] = useState(undefined);
   let [showModal, setShowModal] = useState(false);
   let [modalMsg, setModalMsg] = useState("");
+
+  let navigate= useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -125,9 +128,12 @@ function Header() {
           <option value="User">User</option>
           <option value="Admin">Admin</option>
         </select>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex gap-3 justify-content-center">
           <button type="submit" className="btn btn-primary col-4">
             Create User
+          </button>
+          <button type="button" className="btn btn-primary col-4" onClick={() => navigate("/")}>
+            Home
           </button>
         </div>
       </form>
@@ -170,6 +176,7 @@ function ShowUsers() {
       <div>
         <h4>Users List</h4>
       </div>
+
       <div className="d-flex flex-wrap mt-5 justify-content-evenly gap-4">
         {userList.map((obj, index) => {
           return (
@@ -219,6 +226,9 @@ function ShowUsers() {
           );
         })}
       </div>
+      <div className="container d-flex justify-content-end my-4">
+      <Link to="/" className="home-link">« Home</Link>
+      </div>
     </div>
   );
 }
@@ -251,6 +261,8 @@ function EditUser({ formValue }) {
   let [profile, setProfile] = useState(formValue.profile);
   let [showModal, setShowModal] = useState(false);
   let [modalMsg, setModalMsg] = useState("");
+
+  let navigate= useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -333,9 +345,12 @@ function EditUser({ formValue }) {
           <option value="User">User</option>
           <option value="Admin">Admin</option>
         </select>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex gap-3 justify-content-center">
           <button type="submit" className="btn btn-primary col-4">
             Update
+          </button>
+          <button type="button" className="btn btn-primary col-4" onClick={() => navigate("/")}>
+            Home
           </button>
         </div>
       </form>

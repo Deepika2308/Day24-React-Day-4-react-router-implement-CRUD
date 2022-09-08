@@ -1,5 +1,6 @@
-.start-link{
+.start-link,.home-link{
     text-decoration:none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
 }
+

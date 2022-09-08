@@ -30,6 +30,10 @@ function App() {
   );
 }
 
+// function WelcomePage(){
+
+// }
+
 function Header() {
   let [fname, setFname] = useState("");
   let [lname, setLname] = useState("");

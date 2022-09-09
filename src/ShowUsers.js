@@ -8,8 +8,6 @@ import { HomeLink } from "./HomeLink";
 export function ShowUsers() {
   let navigate = useNavigate();
   let [userList, setUserList] = useState([]);
-  let [showModal, setShowModal] = useState(false);
-  let [modalMsg, setModalMsg] = useState("");
 
   function fetchUsers() {
     fetch(`${API}/users`)
@@ -42,7 +40,7 @@ export function ShowUsers() {
                 <Button
                   className="mb-4 col-4"
                   type="button"
-                  onClick={() => navigate(`/edit-user/${obj._id}`)}
+                  onClick={() => navigate(`/edit-user/`+obj.id)}
                 >
                   Edit
                 </Button>
@@ -52,19 +50,12 @@ export function ShowUsers() {
                   className="mb-4 col-4"
                   type="button"
                   onClick={() => {
-                    fetch(`${API}/deleteUser/${obj._id}`, {
+                    fetch(`${API}/users/`+obj.id, {
                       method: "DELETE",
                     })
-                      .then((response) => response.json())
-                      .then((data) => {
-                        if (data.acknowledged) {
-                          setShowModal(true);
-                          setModalMsg("User deleted successfully!!");
-                          fetchUsers();
-                        } else {
-                          setShowModal(true);
-                          setModalMsg("Error in deleting user, try again!!");
-                        }
+                      .then((data) => data.json())
+                      .then((user) => {
+                        fetchUsers();
                       })
                       .catch((err) => console.log(err));
                   }}

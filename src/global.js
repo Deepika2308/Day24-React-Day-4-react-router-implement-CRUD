@@ -1,1 +1,1 @@
-export const API = "https://day24crud.herokuapp.com";
+export const API = "https://62bade74573ca8f8328d96e9.mockapi.io";

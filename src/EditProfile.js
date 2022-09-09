@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Modal, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { API } from './global.js';
-import { HomeLink } from "./HomeLink";
+import {useNavigate} from "react-router-dom";
 
 //edit user profile starts
 export function EditProfile() {
   let { profile, id } = useParams();
+  const navigate=useNavigate();
 
   let [createUser, setCreateUser] = useState(false);
   let [deleteUser, setDeleteUser] = useState(false);
@@ -14,8 +15,6 @@ export function EditProfile() {
   let [editLastName, setEditLastName] = useState(false);
   let [editEmailId, setEditEmailId] = useState(false);
   let [editMobileNum, setEditMobileNum] = useState(false);
-  let [showModal, setShowModal] = useState(false);
-  let [modalMsg, setModalMsg] = useState("");
 
   function handleEdit(event) {
     event.preventDefault();
@@ -29,22 +28,12 @@ export function EditProfile() {
       edit_mobileNumber: editMobileNum
     };
 
-    fetch(`${API}/editProfile/${id}`, {
+    fetch(`${API}/profiles/`+id, {
       method: "PUT",
       body: JSON.stringify(editedObj),
       headers: { "content-type": "application/json" },
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.modifiedCount > 0) {
-          setShowModal("true");
-          setModalMsg("Profile has been updated successfully!!");
-        }
-        else {
-          setShowModal("true");
-          setModalMsg("Error in updating profile/no change in the existing profile!!");
-        }
-      });
+      .then(() => navigate(`/profile/`+id))
   }
 
 
@@ -140,20 +129,6 @@ export function EditProfile() {
         Update
       </Button>
 
-      <HomeLink />
-
-      {/* modal starts */}
-      <Modal show={showModal}>
-        <Modal.Body>
-          <p>{modalMsg}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button aria-label="Close" onClick={() => setShowModal(!showModal)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* modal ends */}
     </form>
   );
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Button } from "react-bootstrap";
 import { API } from './global.js';
 
 //Edit user form starts
@@ -11,8 +10,6 @@ export function EditUser({ formValue }) {
   let [emailId, setEmailId] = useState(formValue.emailId);
   let [mobileNum, setMobileNum] = useState(formValue.mobileNum);
   let [profile, setProfile] = useState(formValue.profile);
-  let [showModal, setShowModal] = useState(false);
-  let [modalMsg, setModalMsg] = useState("");
 
   let navigate = useNavigate();
 
@@ -27,16 +24,12 @@ export function EditUser({ formValue }) {
       profile: profile,
     };
 
-    fetch(`${API}/updateUser/${formValue._id}`, {
+    fetch(`${API}/users/`+formValue.id, {
       method: "PUT",
       body: JSON.stringify(updatedFormValue),
       headers: { "content-type": "application/json" },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setShowModal(true);
-        setModalMsg("User has been updated successfully!!");
-      })
+      .then(() => navigate("/users"))
       .catch((error) => console.log(error));
   };
   return (
@@ -106,19 +99,6 @@ export function EditUser({ formValue }) {
           </button>
         </div>
       </form>
-
-      {/* modal starts */}
-      <Modal show={showModal}>
-        <Modal.Body>
-          <p>{modalMsg}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button aria-label="Close" onClick={() => setShowModal(!showModal)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* modal ends */}
     </div>
   );
 }

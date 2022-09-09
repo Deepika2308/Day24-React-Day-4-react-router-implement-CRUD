@@ -8,7 +8,7 @@ import {
   useNavigate,
   useParams
 } from "react-router-dom";
-import { Modal, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { TiDelete } from "react-icons/ti";
 import {API} from './global.js';
@@ -42,8 +42,6 @@ function Header() {
   let [emailId, setEmailId] = useState("");
   let [mobileNum, setMobileNum] = useState("");
   let [profile, setProfile] = useState(undefined);
-  let [showModal, setShowModal] = useState(false);
-  let [modalMsg, setModalMsg] = useState("");
 
   let navigate= useNavigate();
 
@@ -57,21 +55,12 @@ function Header() {
       profile: profile,
     };
 
-    fetch(`${API}/createUser`, {
+    fetch(`${API}/users`, {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: { "content-type": "application/json; charset=UTF-8" },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.msg) {
-          setShowModal(true);
-          setModalMsg("User has been added successfully!!");
-        } else {
-          setShowModal(true);
-          setModalMsg("User already exists!!");
-        }
-      });
+      .then(() => navigate("/users"))
   };
 
   return (
@@ -141,19 +130,7 @@ function Header() {
           </button>
         </div>
       </form>
-
-      {/* modal starts */}
-      <Modal show={showModal}>
-        <Modal.Body>
-          <p>{modalMsg}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button aria-label="Close" onClick={() => setShowModal(!showModal)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* modal ends */}
+     
     </div>
   );
 }
@@ -171,12 +148,12 @@ function Profile({id}) {
    let navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${API}/getProfile/${id}`)
+    fetch(`${API}/profiles/`+id)
     .then(response => response.json())
     .then(data => {
       setProfile(data);
     })
-  },[id]);
+  });
 
   return (
     <div className="container d-flex flex-column justify-content-center m-auto p-auto mt-4">
@@ -196,7 +173,7 @@ function Profile({id}) {
         })}
         </div>
       </div>
-      <Button type="button" className="edit-button-profile mt-4 m-auto p-auto" onClick={() => navigate(`/edit-profile/${profile.name}/${profile._id}`)}>
+      <Button type="button" className="edit-button-profile mt-4 m-auto p-auto" onClick={() => navigate(`/edit-profile/${profile.name}/${profile.id}`)}>
         Edit
       </Button>
 

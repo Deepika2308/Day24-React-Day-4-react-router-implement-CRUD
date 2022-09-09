@@ -10,10 +10,10 @@ export function GetUserFromDB() {
 
   //get user values from db
   useEffect(() => {
-    fetch(`${API}/findUser/` + id)
-      .then((response) => response.json())
-      .then((data) => {
-        setFormValue(data);
+    fetch(`${API}/users/${id}`)
+      .then((data) => data.json())
+      .then((user) => {
+        setFormValue(user);
       });
   }, []);
 
